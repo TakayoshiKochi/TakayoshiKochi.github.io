@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>window.postMessage test (client)</title>
+<script>
+function setup() {
+  var opener = window.opener;
+  var obj = { message: 'client window opened!', x: 30, y: 20, width: 100, height: 200 };
+  opener.postMessage(JSON.stringify(obj), '*');
+}
+
+window.onload = setup;
+</script>
+</head>
+<body>
+</body>
+</html>

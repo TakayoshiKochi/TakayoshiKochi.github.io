@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>window.postMessage test</title>
+<script>
+function open_window() {
+  window.open('000_postmessage_window.html', 'popup');
+}
+
+function setup() {
+  var button = document.querySelector('button');
+  button.addEventListener('click', function(e) {
+    open_window();
+  }, false);
+}
+
+window.onload = setup;
+
+function receive_message(e) {
+  // console.log(e);
+  try {
+    var obj = JSON.parse(e.data);
+  } catch(e) {}
+  var mes = document.getElementById('message');
+  mes.textContent = obj.message;
+}
+
+window.addEventListener('message', receive_message, false);
+</script>
+</head>
+<body>
+<button>Click to open another window</button>
+<div>
+<a href="http://www.google.com" target="popup">Click this link to navigate to Google in popup.</a>
+</div>
+<div id="message">
+</div>
+</body>
+</html>
