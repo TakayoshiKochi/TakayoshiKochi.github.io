@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <body>
-<iframe src="resources/dummy.html"></iframe>
+<iframe src="resources/dummy.html" name="dummy"></iframe>
 <div id="host"></div>
-<a href="resources/dummy.html?q=google">Click this link to navigate inside iframe.</a>
+<a href="resources/dummy.html?q=google" target="dummy">Click this link to navigate inside iframe.</a>
 </body>
 <script>
 var host = document.querySelector("#host");
 var root = host.attachShadow({mode: 'open'});
-root.innerHTML = '<style>a:visited { color: red; }</style><a href="resources/dummy.html?q=google">Is this link blue?</a>';
+root.innerHTML = '<style>a:link { color: blue; } a:visited { color: red; }</style><a href="resources/dummy.html?q=google">Is this link blue? (blue: not visited, red: visited)</a>';
 </script>
 </html>
