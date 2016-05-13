@@ -1,8 +1,8 @@
 <html>
 <script>
 function send_message() {
-  var opener = window.opener;
-  var obj = { message: 'frame-a opened!' };
+  var opener = window.opener || window.parent;
+  var obj = { message: 'frame-a opened in ' +  window.name };
   opener.postMessage(JSON.stringify(obj), '*');
 }
 window.onload = send_message;

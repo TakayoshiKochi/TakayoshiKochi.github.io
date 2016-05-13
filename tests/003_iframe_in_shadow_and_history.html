@@ -39,7 +39,7 @@ function receive_message(e) {
   try {
     var obj = JSON.parse(e.data);
   } catch(e) {}
-  var mes = document.querySelector('message');
+  var mes = document.querySelector('#message');
   mes.textContent = obj.message;
   update_length();
 }
