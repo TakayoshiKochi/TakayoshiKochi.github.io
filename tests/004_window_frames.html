@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>window.frames should not leak frames in shadow</title>
+<script src="resources/testharness.js"></script>
+<script src="resources/testharnessreport.js"></script>
+</head>
+<body>
+<div id="log"></div>
+<iframe src="resources/dummy.html" name="mainFrame1"></iframe>
+<div id="host-open"></div>
+<div id="host-closed"></div>
+<script>
+var host_open = document.getElementById('host-open');
+var root_open = host_open.attachShadow({mode: 'open'});
+root_open.innerHTML = '<iframe src="resources/dummy.html" name="shadowFrame1"></iframe>';
+var i1 = root_open.querySelector('iframe');
+
+var host_closed = document.getElementById('host-closed');
+var root_closed = host_closed.attachShadow({mode: 'closed'});
+root_closed.innerHTML = '<iframe src="resources/dummy.html" name="shadowFrame2"></iframe>';
+var i2 = root_closed.querySelector('iframe');
+
+test(() => {
+  assert_equals(window.frames.length, 1);
+  document.body.appendChild(i1);
+  document.body.appendChild(i2);
+  assert_equals(window.frames.length, 3);
+  root_open.appendChild(i1);
+  root_closed.appendChild(i2);
+}, 'window.frames.length should not count iframs in shadow DOM.');
+</script>
+</body>
+</html>
