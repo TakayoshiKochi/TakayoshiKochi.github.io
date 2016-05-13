@@ -8,26 +8,43 @@
 Hello, iframe in shadow DOM.  Test window.history.
 </div>
 <div>
-iframe (name: A)
+<div>
+iframe in Document (name: A)
+</div>
 <iframe src="resources/frame-a.html" name="A"></iframe>
 </div>
 <div id="iframe_host"></div>
-<div id="con"></div>
-<button id="update">update</button>
+<div id="con">window.history.length = </div>
+<button id="update">update length display</button>
+<div id="message"></div>
 </body>
 <script>
 var host = document.querySelector('#iframe_host');
 var root = host.attachShadow({'mode': 'open'});
 var div = document.createElement('div');
-div.textContent = 'iframe (name: B)';
+div.innerHTML = '<div>iframe in Shadow DOM (name: B)</div>';
 var frame = document.createElement('iframe');
 frame.src = "resources/frame-a.html";
 frame.name = "B";
 div.appendChild(frame)
 root.appendChild(div);
 
-update.addEventListener("click", function() {
+function update_length() {
   con.textContent = 'window.history.length = ' + window.history.length;
-}, false);
+}
+update.addEventListener("click", update_length, false);
+
+function receive_message(e) {
+  // console.log(e);
+  try {
+    var obj = JSON.parse(e.data);
+  } catch(e) {}
+  var mes = document.querySelector('message');
+  mes.textContent = obj.message;
+  update_length();
+}
+
+window.addEventListener('message', receive_message, false);
+
 </script>
 </html>

@@ -1,4 +1,12 @@
 <html>
+<script>
+function send_message() {
+  var opener = window.opener;
+  var obj = { message: 'frame-b opened!' };
+  opener.postMessage(JSON.stringify(obj), '*');
+}
+window.onload = send_message;
+</script>
 <body>
 This is document B.
 <a href="frame-a.html">Go to document A</a>
