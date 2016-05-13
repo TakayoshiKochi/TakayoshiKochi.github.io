@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+<body>
+<iframe src="resources/dummy.html"></iframe>
+<div id="host"></div>
+</body>
+<script>
+var host = document.querySelector("#host");
+var root = host.attachShadow({mode: 'open'});
+root.innerHTML = '<style>a:visited { color: red; }</style><a href="resources/dummy.html?q=google">Google search</a>';
+</script>
+</html>
