@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+</head>
+<body>
+<div>
+Hello, iframe in shadow DOM.  Test window.history.
+</div>
+<div>
+iframe (name: A)
+<iframe src="resources/frame-a.html" name="A"></iframe>
+</div>
+<div id="iframe_host"></div>
+<div id="con"></div>
+<button id="update">update</button>
+</body>
+<script>
+var host = document.querySelector('#iframe_host');
+var root = host.attachShadow({'mode': 'open'});
+var div = document.createElement('div');
+div.textContent = 'iframe (name: B)';
+var frame = document.createElement('iframe');
+frame.src = "resources/frame-b.html";
+frame.name = "B";
+div.appendChild(frame)
+root.appendChild(div);
+
+update.addEventListener("click", function() {
+  con.textContent = 'window.history.length = ' + window.history.length;
+}, false);
+</script>
+</html>
