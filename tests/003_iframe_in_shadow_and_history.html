@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<title>Shadow DOM and window.history for iframes</title>
 </head>
 <body>
 <div>
@@ -20,7 +21,7 @@ var root = host.attachShadow({'mode': 'open'});
 var div = document.createElement('div');
 div.textContent = 'iframe (name: B)';
 var frame = document.createElement('iframe');
-frame.src = "resources/frame-b.html";
+frame.src = "resources/frame-a.html";
 frame.name = "B";
 div.appendChild(frame)
 root.appendChild(div);
