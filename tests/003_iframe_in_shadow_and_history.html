@@ -15,7 +15,8 @@ iframe in Document (name: A)
 </div>
 <div id="iframe_host"></div>
 <div id="con">window.history.length = </div>
-<button id="update">update length display</button>
+<div><button id="update">update length display</button></div>
+<div><button id="prev">&lt;&lt; Previous</button><button id="next">Next &gt;&gt;</button></div>
 <div id="message"></div>
 </body>
 <script>
@@ -45,6 +46,12 @@ function receive_message(e) {
 }
 
 window.addEventListener('message', receive_message, false);
+
+var prev = document.querySelector('#prev');
+var next = document.querySelector('#next');
+
+prev.addEventListener('click', () => { window.history.go(-1); }, false);
+next.addEventListener('click', () => { window.history.go(1); }, false);
 
 </script>
 </html>
