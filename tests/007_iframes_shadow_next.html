@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>A2: iframe &amp; Shadow DOM navigation and window.history</title>
+</head>
+<body>
+<div>
+This is the second page.  You see the 2 iframes.
+</div>
+<div id="host1"></div>
+<div id="hsot2"></div>
+<script>
+var host1 = document.getElementById("host1");
+var root1 = host1.attachShadow({mode: 'open'});
+root1.innerHTML = '<iframe src="resources/005_b1.html"></iframe>';
+
+var host2 = document.getElementById("host2");
+var root2 = host2.attachShadow({mode: 'closed'});
+root2.innerHTML = '<iframe src="resources/005_c1.html"></iframe>';
+</script>
+<div>
+<button onclick="history.back();">Back</button><button onclick="history.forward();">Forward</button>
+</div>
+</body>
+</html>
