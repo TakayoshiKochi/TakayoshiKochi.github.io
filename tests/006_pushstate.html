@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test: history.pushState</title>
+</head>
+<body>
+<div>
+<button id="b">Click</button>
+</div>
+<div id="con">
+</div>
+</body>
+</html>
+<script>
+var page_index = 0;
+
+b.addEventListener('click', () => {
+  window.history.pushState({'data': 'hello, world' + page_index, 'page': page_index},
+                            'Result pushState page ' + page_index,
+                             '006_pushstate.html?page=' + page_index);
+  page_index++;
+}, false);
+
+window.addEventListener('popstate', (e) => {
+  try {
+    if (e.state && e.state.data) {
+      con.textContent = e.state.data;
+      page_index = e.state.page;
+    } else {
+      console.log('no data');
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}, false);
+</script>
