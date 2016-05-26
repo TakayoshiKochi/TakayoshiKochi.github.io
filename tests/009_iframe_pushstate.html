@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Test: history.pushState</title>
+</head>
+<body>
+<div>
+Click on the button below will push state and makes a navigation forward.
+Click a few times, then use browser's back button to see if any state is
+popped from the navigation stack and a popstate event is sent to window.
+</div>
+<div>
+<button id="b">Click</button>
+</div>
+<iframe src="resources/009_subframe_pushstate.html"></iframe>
+<div>popstate message will displayed below:
+<div id="con"></div>
+</div>
+</body>
+</html>
+<script>
+var page_index = 0;
+
+b.addEventListener('click', () => {
+  window.history.pushState({'data': 'hello, world' + page_index, 'page': page_index},
+                            'Result pushState page ' + page_index,
+                            '009_iframe_pushstate.html?page=' + page_index);
+  page_index++;
+}, false);
+
+window.addEventListener('popstate', (e) => {
+  try {
+    if (e.state && e.state.data) {
+      con.textContent = e.state.data;
+      page_index = e.state.page;
+    } else {
+      console.log('no data');
+    }
+  } catch(e) {
+    console.log(e);
+  }
+}, false);
+</script>
