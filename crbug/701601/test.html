@@ -1,0 +1,22 @@
+<html>
+
+<head>
+  <script src="test-fixture-injector.js"></script>
+  <link rel="import" href="my-element.html">
+  <link rel="import" href="404-1.html">
+  <link rel="import" href="404-2.html">
+</head>
+
+<body>
+  <test-fixture></test-fixture>
+  <script>
+    const el = document.querySelector('test-fixture');
+    const klass = customElements.get('test-fixture');
+    if (el instanceof klass === false) {
+      throw 'test-fixture not upgraded!';
+    }
+    window.top.runTest && window.top.runTest();
+  </script>
+</body>
+
+</html>
