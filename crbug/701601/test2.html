@@ -1,0 +1,11 @@
+<script src="test-fixture-injector2.js"></script>
+<test-fixture></test-fixture>
+<script>
+// gc();
+const el = document.querySelector('test-fixture');
+const klass = customElements.get('test-fixture');
+if (el instanceof klass === false) {
+  throw 'test-fixture not upgraded!';
+}
+window.top.runTest && window.top.runTest();
+</script>

@@ -1,0 +1,23 @@
+<!doctype html>
+<html>
+
+<body>
+  <pre id="out"></pre>
+  <script>
+    const runs = 2000;
+    var run = 0;
+    window.runTest = function() {
+      if (run === runs) return;
+      run++;
+      out.textContent = (run + '/' + runs);
+      var el = document.querySelector('iframe');
+      el && el.parentNode.removeChild(el);
+      el = document.createElement('iframe');
+      el.src = 'test2.html';
+      document.body.appendChild(el);
+    }
+    runTest();
+  </script>
+</body>
+
+</html>
