@@ -20,7 +20,7 @@ function reload() {
 
 var iid = -1;
 function start() {
-  if (iid == -1)
+  if (iid != -1)
     return;
   console.log('start.');
   iid = window.setInterval(reload, 10000);
