@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>crbug.com/609137</title>
+<script>
+function reload() {
+  document.getElementsByTagName('IFRAME')[0].contentWindow.location='http://online-go.com';
+}
+</script>
+<body>
+  <div><button onclick="reload();">reload</button></div>
+  <iframe src="http://online-go.com" width="800" height="600"></iframe>
+</body>
+</html>
