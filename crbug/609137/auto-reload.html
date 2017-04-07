@@ -4,6 +4,7 @@
 <title>crbug.com/609137 (auto-reload)</title>
 <body>
   <div><button onclick="start();">start</button></div>
+  <div><button onclick="stop();">stop</button></div>
   <iframe src="http://online-go.com" width="800" height="600"></iframe>
   <div id="x"></div>
 </body>
@@ -17,9 +18,20 @@ function reload() {
   document.getElementById('x').textContent = count;
 }
 
+var iid = -1;
 function start() {
+  if (iid == -1)
+    return;
   console.log('start.');
-  window.setInterval(reload, 10000);
+  iid = window.setInterval(reload, 10000);
+}
+
+function stop() {
+  if (iid == -1)
+    return;
+  console.log('stop.');
+  window.clearInterval(iid);
+  iid = -1;
 }
 </script>
 </html>
