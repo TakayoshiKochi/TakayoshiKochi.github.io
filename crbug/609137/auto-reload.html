@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<meta charset="utf-8">
+<title>crbug.com/609137 (auto-reload)</title>
+<body>
+  <div><button onclick="start();">start</button></div>
+  <iframe src="http://online-go.com" width="800" height="600"></iframe>
+  <div id="x"></div>
+</body>
+<script>
+var count = 0;
+
+function reload() {
+  console.log('reloading iframe.');
+  document.getElementsByTagName('IFRAME')[0].contentWindow.location='http://online-go.com';
+  ++count;
+  document.getElementById('x').textContent = count;
+}
+
+function start() {
+  console.log('start.');
+  window.setInterval(reload, 10000);
+}
+</script>
+</html>
