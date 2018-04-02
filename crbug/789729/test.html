@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+<head>
+
+  <meta charset="utf-8">
+  <title>app</title>
+
+  <style id="x-app-style">
+    .x-app.horizontal.layout {
+      display: flex;
+    }
+  </style>
+
+  <style id="x-thing-style">
+
+    .x-thing.message {
+      box-sizing: border-box;
+      height: 80px;
+      padding: 4px;
+      padding-left: 77px;
+      line-height: 167%;
+      cursor: default;
+      background-color: white;
+      position: relative;
+      color: black;
+      background-repeat: no-repeat;
+      background-position: 10px 10px;
+      background-size: 60px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .x-thing.from {
+      display: inline;
+      font-weight: bold;
+    }
+
+    .x-thing.timestamp {
+      margin-left: 10px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+  </style>
+
+  <template id="x-item-repeat"><x-item class="x-app horizontal layout"></x-item></template>
+
+  <template id="x-item-content"><x-thing></x-thing><x-thing></x-thing><x-thing></x-thing><x-thing></x-thing><x-thing></x-thing><x-thing></x-thing></template>
+
+  <template id="x-thing-content"><div class="x-thing message"><span class="x-thing from"></span><span class="x-thing timestamp"></span><div class="x-thing subject"></div></div></template>
+
+  <script>
+
+    const useShadow = window.location.search.match('useShadow');
+    const noStyle = window.location.search.match('noStyle');
+
+    const thingStyle = window['x-thing-style'];
+    const appStyle = window['x-app-style'];
+
+    if (noStyle) {
+      thingStyle.remove();
+      appStyle.remove();
+    }
+
+    const xThingTemplate = document.querySelector('#x-thing-content');
+    if (useShadow && !noStyle) {
+      xThingTemplate.content.insertBefore(thingStyle, xThingTemplate.content.firstChild);
+    }
+
+    customElements.define('x-thing', class extends HTMLElement {
+
+      connectedCallback() {
+        this.root = useShadow ? this.attachShadow({mode: 'open'}) : this;
+        this.root.appendChild(document.importNode(xThingTemplate.content, true));
+        this._from = this.root.querySelector('.from');
+        this._timeStamp = this.root.querySelector('.timestamp');
+        this._subject = this.root.querySelector('.subject');
+      }
+
+      set a(v) {
+        this._from.textContent = v;
+      }
+
+      set b(v) {
+        this._timeStamp.textContent = v;
+      }
+
+      set c(v) {
+        this._subject.textContent = v;
+      }
+
+    });
+
+    const XItemTemplate = document.querySelector('#x-item-content');
+
+    customElements.define('x-item', class extends HTMLElement {
+
+      connectedCallback() {
+        this.root = useShadow ? this.attachShadow({mode: 'open'}) : this;
+        this.root.appendChild(document.importNode(XItemTemplate.content, true));
+      }
+
+      set item(item) {
+        let x = this.root.firstChild;
+        x.a = item.a;
+        x.b = item.b;
+        x.c = item.c;
+        x = x.nextSibling;
+        x.a = item.d;
+        x.b = item.e;
+        x.c = item.f;
+        x = x.nextSibling;
+        x.a = item.g;
+        x.b = item.h;
+        x.c = item.i;
+        x = x.nextSibling;
+        x.a = item.j;
+        x.b = item.k;
+        x.c = item.l;
+        x = x.nextSibling;
+        x.a = item.m;
+        x.b = item.n;
+        x.c = item.o;
+        x = x.nextSibling;
+        x.a = item.q;
+        x.b = item.r;
+        x.c = item.s;
+      }
+
+    });
+
+    function makeItem(suffix) {
+      const o = {};
+      const s = 'a'.charCodeAt(0);
+      for (let i=s, l; i < s+26; i++) {
+        l = String.fromCharCode(i);
+        o[l] = l + ': ' + suffix;
+      }
+      return o;
+    }
+
+    function generateData(count) {
+      const data = [];
+      for (let i=0; i<count; i++) {
+        data.push(makeItem(i));
+      }
+      return data;
+    }
+
+    const xItemRepeatTemplate = document.querySelector('#x-item-repeat');
+
+    customElements.define('x-app', class extends HTMLElement {
+
+      connectedCallback() {
+        this.root = useShadow ? this.attachShadow({mode: 'open'}) : this;
+        if (useShadow && !noStyle) {
+          this.root.appendChild(appStyle);
+        }
+        const template = xItemRepeatTemplate;
+        const data = generateData(250);
+        for (let i=0, l=data.length, item; (i<l) && (item=data[i]); i++) {
+          let x = document.importNode(template.content, true);
+          let n = x.firstChild;
+          this.root.appendChild(n);
+          n.item = item;
+        }
+      }
+    });
+
+  </script>
+
+</head>
+<body>
+  <script>
+  requestAnimationFrame(function() {
+    const s = performance.now();
+    document.body.appendChild(document.createElement('x-app'));
+    // force layout.
+    document.body.offsetWidth;
+    const time = (performance.now() - s).toFixed(3);
+    console.log(time);
+    document.title = `${time}ms`;
+    window.top.postMessage({time: time + 'ms'}, '*');
+  });
+  </script>
+</body>
+</html>
