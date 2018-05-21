@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Feature detection 2</title>
+    <link rel="import" href="import.html">
+    <script>
+    function addLog(str) {
+      var log = document.querySelector('#log');
+      var div = document.createElement('div');
+      div.textContent = str;
+      log.appendChild(div);
+    }
+    window.onload = function() {
+      try {
+	document.createElement('div').createShadowRoot();
+	addLog('Shadow DOM V0 is supported.');
+      } catch(e) {
+	addLog('Shadow DOM V0 is not supported.');
+      }
+
+      try {
+	var obj = HTMLElement.prototype;
+	document.registerElement('my-el', obj);
+	var cev0 = 'registerElement' in Document.prototype;
+	addLog('Custom Elements V0 is supported.');
+      } catch(e) {
+	addLog('Custom Elements V0 is not supported.');
+      }
+
+      try {
+	document.querySelector('link[rel=import]').import;
+	addLog('HTML Imports is supported.');
+      } catch(e) {
+	addLog('HTML Imports is not supported.');
+      }
+    };
+    </script>
+  </head>
+  <body>
+    <div id="log">
+    </div>
+  </body>
+</html>
