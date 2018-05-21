@@ -21,16 +21,14 @@
       try {
 	var obj = HTMLElement.prototype;
 	document.registerElement('my-el', obj);
-	var cev0 = 'registerElement' in Document.prototype;
 	addLog('Custom Elements V0 is supported.');
       } catch(e) {
 	addLog('Custom Elements V0 is not supported.');
       }
 
-      try {
-	document.querySelector('link[rel=import]').import;
+      if (document.querySelector('link[rel=import]').import !== undefined) {
 	addLog('HTML Imports is supported.');
-      } catch(e) {
+      } else {
 	addLog('HTML Imports is not supported.');
       }
     };
