@@ -1,0 +1,37 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Feature detection</title>
+    <script>
+    function addLog(str) {
+      var log = document.querySelector('#log');
+      var div = document.createElement('div');
+      div.textContent = str;
+      log.appendChild(div);
+    }
+    window.onload = function() {
+      var sdv0 = 'createShadowRoot' in Element.prototype;
+      if (sdv0)
+	addLog('Shadow DOM V0 is supported.');
+      else
+	addLog('Shadow DOM V0 is not supported.');
+
+      var cev0 = 'registerElement' in Document.prototype;
+      if (cev0)
+	addLog('Custom Elements V0 is supported.');
+      else
+	addLog('Custom Elements V0 is not supported.');
+
+      var htmlimports = 'import' in HTMLLinkElement.prototype
+      if (htmlimports)
+	addLog('HTML Imports is supported.');
+      else
+	addLog('HTML Imports is not supported.');
+    };
+    </script>
+  </head>
+  <body>
+    <div id="log">
+    </div>
+  </body>
+</html>
